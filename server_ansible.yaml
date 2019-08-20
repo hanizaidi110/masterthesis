@@ -1,0 +1,42 @@
+{
+  "uid": "rule:ansible:ansible_script_create_server_config",
+  "tags": [],
+  "type": {
+    "ref": "standard",
+    "parameters": {}
+  },
+  "enabled": true,
+  "trigger": {
+    "type": "core.st2.webhook",
+    "ref": "core.cb7f8931-25c0-4c47-978f-e19f48520b9d",
+    "description": "Trigger type for registering webhooks that can consume arbitrary payload.",
+    "parameters": {
+      "url": "vidserver"
+    }
+  },
+  "metadata_file": "",
+  "context": {
+    "user": "st2admin"
+  },
+  "criteria": {},
+  "action": {
+    "ref": "ansible.playbook",
+    "description": "Run ansible playbook",
+    "parameters": {
+      "private_key": "/hani.pem",
+      "inventory_file": "{{trigger.body.ip}},",
+      "verbose": "v",
+      "sudo": true,
+      "flush_cache": true,
+      "playbook": "/playbook.yml",
+      "env": {
+        "ANSIBLE_HOST_KEY_CHECKING": "False"
+      },
+      "become": true
+    }
+  },
+  "pack": "ansible",
+  "ref": "ansible.ansible_script_create_server_config",
+  "id": "5cf9d6bd6417530306ef35a2",
+  "name": "ansible_script_create_server_config"
+}
